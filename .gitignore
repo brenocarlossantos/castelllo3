@@ -1,0 +1,14 @@
+# dependências (não usamos build, mas por garantia)
+node_modules/
+
+# config local do Claude Code / preview
+.claude/settings.local.json
+
+# sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# logs e temporários
+*.log
+.cache/

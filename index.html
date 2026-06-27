@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CASTElllO³ — Estúdio Criativo</title>
+  <meta name="description" content="CASTElllO³ é um estúdio criativo que constrói ideias com estrutura, narrativa e impacto. Design, Filme e Projetos." />
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <!-- analog / VHS overlay -->
+  <div class="vhs" aria-hidden="true">
+    <div class="vhs__grain"></div>
+    <div class="vhs__scan"></div>
+    <div class="vhs__vignette"></div>
+  </div>
+
+  <!-- skip link for keyboard users -->
+  <a class="skip" href="#hero">Pular para o conteúdo</a>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-head" data-head>
+    <a class="brand" href="#hero" aria-label="CASTElllO ao cubo — início">
+      <img src="assets/castelllo-logo.svg" alt="CASTElllO³" class="brand__mark" />
+    </a>
+
+    <button class="burger" data-burger aria-label="Abrir menu" aria-controls="menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+
+  <!-- menu full-screen (aberto pelo hambúrguer) -->
+  <div class="m-menu" id="menu" data-mmenu aria-hidden="true">
+    <nav aria-label="Navegação">
+      <a href="#manifesto"><i>01</i> Manifesto</a>
+      <a href="#pilares"><i>02</i> Pilares</a>
+      <a href="#clientes"><i>03</i> Clientes</a>
+      <a href="#trabalhos"><i>04</i> Trabalhos</a>
+      <a href="#estudio"><i>05</i> Estúdio</a>
+      <a href="#contato"><i>06</i> Contato</a>
+    </nav>
+    <div class="m-menu__foot">
+      <span>[R] DESIGN</span><span>[G] FILME</span><span>[B] PROJETOS</span>
+    </div>
+  </div>
+
+  <!-- guia lateral de seções (índice) -->
+  <nav class="guide" data-guide aria-label="Índice da página">
+    <ul>
+      <li><a href="#hero"><span class="guide__label">Início</span><span class="guide__tick"></span></a></li>
+      <li><a href="#manifesto"><span class="guide__label">Manifesto</span><span class="guide__tick"></span></a></li>
+      <li><a href="#pilares"><span class="guide__label">Pilares</span><span class="guide__tick"></span></a></li>
+      <li><a href="#clientes"><span class="guide__label">Clientes</span><span class="guide__tick"></span></a></li>
+      <li><a href="#trabalhos"><span class="guide__label">Trabalhos</span><span class="guide__tick"></span></a></li>
+      <li><a href="#estudio"><span class="guide__label">Estúdio</span><span class="guide__tick"></span></a></li>
+      <li><a href="#contato"><span class="guide__label">Contato</span><span class="guide__tick"></span></a></li>
+    </ul>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <main>
+  <section class="hero" id="hero">
+    <div class="hero__top">
+      <span class="tag">[ESTÚDIO CRIATIVO]</span>
+      <span class="tag">SÃO&nbsp;PAULO — BR</span>
+      <span class="tag">SINAL / RGB · MMXXVI</span>
+    </div>
+
+    <div class="hero__center">
+      <div class="hero__logo" data-rgb>
+        <img src="assets/castelllo-logo.svg" alt="CASTElllO³" />
+      </div>
+      <p class="hero__sub">
+        Construímos ideias com <em>estrutura</em>, <em>narrativa</em> e <em>impacto</em>.
+      </p>
+    </div>
+
+    <div class="hero__bottom">
+      <ul class="channels" aria-label="Os três canais">
+        <li class="ch ch--r"><span class="ch__k">[R]</span> Design</li>
+        <li class="ch ch--g"><span class="ch__k">[G]</span> Filme</li>
+        <li class="ch ch--b"><span class="ch__k">[B]</span> Projetos</li>
+      </ul>
+      <a class="scroll-cue" href="#manifesto" aria-label="Rolar para baixo">
+        <span>Role</span>
+        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M12 4v15m0 0l-6-6m6 6l6-6" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- marquee divider -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>3 LETRAS</span><i>·</i><span>3 CORES</span><i>·</i><span>3 ÁREAS</span><i>·</i><span>1 CONCEITO</span><i>·</i>
+      <span>3 LETRAS</span><i>·</i><span>3 CORES</span><i>·</i><span>3 ÁREAS</span><i>·</i><span>1 CONCEITO</span><i>·</i>
+      <span>3 LETRAS</span><i>·</i><span>3 CORES</span><i>·</i><span>3 ÁREAS</span><i>·</i><span>1 CONCEITO</span><i>·</i>
+    </div>
+  </div>
+
+  <!-- ===================== MANIFESTO ===================== -->
+  <section class="manifesto" id="manifesto">
+    <div class="sec-head">
+      <span class="sec-head__k">01 — Manifesto</span>
+      <span class="sec-head__k">[ ³ ]</span>
+    </div>
+
+    <h2 class="big" data-reveal>
+      <span class="line">Quebrar o esperado</span>
+      <span class="line">para construir <span class="hl-r">identidade</span>.</span>
+    </h2>
+
+    <div class="manifesto__grid">
+      <p class="lead" data-reveal>
+        Os três <strong>“l”</strong> em minúsculo não são um erro. São linguagem.
+        A intervenção tipográfica forma uma <em>pilastra</em> — o símbolo estrutural
+        do castelo, a base que sustenta ideias.
+      </p>
+      <div class="manifesto__three" data-reveal>
+        <p class="num"><span class="hl-r">3</span> — Estrutura, ritmo e conclusão.</p>
+        <p>Início, meio e fim. Setup, conflito e resolução. A regra dos terços.
+          O cérebro entende e memoriza melhor em três. Por isso 1, 2, 3… e já.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== PILARES / O QUE FAZEMOS ===================== -->
+  <section class="pillars" id="pilares" data-pillars>
+    <div class="pillars__pin">
+      <div class="pillars__glow" data-pillar-glow aria-hidden="true"></div>
+      <div class="pillars__bar">
+        <span class="sec-head__k">02 — O que fazemos</span>
+        <span class="sec-head__k" data-pillar-count>01 / 03</span>
+      </div>
+
+      <div class="pillars__cols">
+        <div class="pillars__index">
+          <button class="pillars__idx is-on" data-pillar-nav="0"><i>01</i> Design</button>
+          <button class="pillars__idx" data-pillar-nav="1"><i>02</i> Filme</button>
+          <button class="pillars__idx" data-pillar-nav="2"><i>03</i> Projetos</button>
+        </div>
+
+        <div class="pillars__viewport">
+          <div class="pillars__track" data-pillar-track>
+            <div class="pillars__group" data-group="0">
+              <span class="srv">Direção de Arte</span>
+              <span class="srv">Conceito de Campanha</span>
+              <span class="srv">Comerciais &amp; CGI</span>
+              <span class="srv">Identidade Visual</span>
+            </div>
+            <div class="pillars__group" data-group="1">
+              <span class="srv">Direção de Filme</span>
+              <span class="srv">Motion Design</span>
+              <span class="srv">Filmes Comerciais</span>
+              <span class="srv">VideoClipes</span>
+              <span class="srv">Edição e Finalização</span>
+            </div>
+            <div class="pillars__group" data-group="2">
+              <span class="srv">Estratégia Criativa</span>
+              <span class="srv">Experiências Digitais</span>
+              <span class="srv">Campanhas de Lançamento</span>
+              <span class="srv">Projetos Especiais</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== CLIENTES ===================== -->
+  <section class="clients" id="clientes" data-clients>
+    <div class="clients__pin">
+      <div class="clients__glow" aria-hidden="true"></div>
+      <div class="clients__bar">
+        <span class="sec-head__k">03 — Clientes</span>
+        <span class="sec-head__k" data-client-count>01 / 06</span>
+      </div>
+      <div class="clients__stage">
+        <div class="clients__arc" data-arc></div>
+        <div class="clients__logo" data-client-logo></div>
+        <div class="clients__desc" data-client-desc></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TRABALHOS ===================== -->
+  <section class="works" id="trabalhos">
+    <div class="sec-head">
+      <span class="sec-head__k">04 — Trabalhos selecionados</span>
+      <a class="sec-head__link" href="#contato">Ver tudo →</a>
+    </div>
+
+    <ul class="work-list" data-works>
+      <li class="work" data-tint="r">
+        <a href="#contato">
+          <span class="work__idx">001</span>
+          <span class="work__title split" data-text="Sinal Aberto">Sinal Aberto</span>
+          <span class="work__meta">Identidade · Filme</span>
+          <span class="work__year">2026</span>
+        </a>
+        <span class="work__media" aria-hidden="true"></span>
+      </li>
+      <li class="work" data-tint="g">
+        <a href="#contato">
+          <span class="work__idx">002</span>
+          <span class="work__title split" data-text="Fita Mestra">Fita Mestra</span>
+          <span class="work__meta">Direção · Cor</span>
+          <span class="work__year">2025</span>
+        </a>
+        <span class="work__media" aria-hidden="true"></span>
+      </li>
+      <li class="work" data-tint="b">
+        <a href="#contato">
+          <span class="work__idx">003</span>
+          <span class="work__title split" data-text="Terço &amp; Meio">Terço &amp; Meio</span>
+          <span class="work__meta">Estratégia · Web</span>
+          <span class="work__year">2025</span>
+        </a>
+        <span class="work__media" aria-hidden="true"></span>
+      </li>
+      <li class="work" data-tint="r">
+        <a href="#contato">
+          <span class="work__idx">004</span>
+          <span class="work__title split" data-text="Pilastra">Pilastra</span>
+          <span class="work__meta">Branding · Motion</span>
+          <span class="work__year">2024</span>
+        </a>
+        <span class="work__media" aria-hidden="true"></span>
+      </li>
+      <li class="work" data-tint="g">
+        <a href="#contato">
+          <span class="work__idx">005</span>
+          <span class="work__title split" data-text="Memória Analógica">Memória Analógica</span>
+          <span class="work__meta">Filme · Documentário</span>
+          <span class="work__year">2024</span>
+        </a>
+        <span class="work__media" aria-hidden="true"></span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ===================== ESTÚDIO / EXPERTISE ===================== -->
+  <section class="studio" id="estudio">
+    <div class="sec-head">
+      <span class="sec-head__k">05 — O estúdio</span>
+      <span class="sec-head__k">[ EXPERTISE ]</span>
+    </div>
+
+    <div class="studio__grid">
+      <p class="studio__statement" data-reveal>
+        A CASTElllO³ nasce para ir <span class="hl-g">além da execução</span>.
+        Pensamos em três: <em>design</em>, <em>filme</em> e <em>projetos</em> —
+        três áreas, três canais de cor, um único conceito de construção.
+      </p>
+
+      <ul class="services" data-reveal>
+        <li><span>01</span> Direção de Arte</li>
+        <li><span>02</span> Identidade Visual</li>
+        <li><span>03</span> Motion Design</li>
+        <li><span>04</span> Direção de Filme</li>
+        <li><span>05</span> Edição &amp; Cor</li>
+        <li><span>06</span> Estratégia de Marca</li>
+        <li><span>07</span> Design de Produto Digital</li>
+        <li><span>08</span> Conceito &amp; Narrativa</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== CONTATO / FOOTER ===================== -->
+  <footer class="contato" id="contato">
+    <div class="sec-head">
+      <span class="sec-head__k">06 — Vamos construir</span>
+      <span class="sec-head__k">você + CASTElllO³</span>
+    </div>
+
+    <a class="contato__big split" data-text="Diga olá" href="mailto:contato@castelloestudio.com">Diga olá</a>
+
+    <div class="contato__rows">
+      <a class="contato__mail" href="mailto:contato@castelloestudio.com">contato@castelloestudio.com</a>
+      <ul class="social">
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">Behance</a></li>
+        <li><a href="#">Vimeo</a></li>
+        <li><a href="#">LinkedIn</a></li>
+      </ul>
+    </div>
+
+    <div class="foot-bar">
+      <span>© <span data-year>2026</span> CASTElllO³</span>
+      <span class="foot-bar__concept">3 letras · 3 cores · 3 áreas · 1 conceito</span>
+      <button class="to-top" data-totop>Topo ↑</button>
+    </div>
+  </footer>
+  </main>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

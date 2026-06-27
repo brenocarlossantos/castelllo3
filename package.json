@@ -1,0 +1,10 @@
+{
+  "name": "castelllo-site",
+  "version": "1.0.0",
+  "description": "Site do estúdio criativo CASTElllO³ — design, filme e projetos.",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  }
+}
