@@ -13,10 +13,10 @@
      ========================================================= */
   const I18N = {
     'skip':            ['Pular para o conteúdo', 'Skip to content'],
-    'hero.tag1':       ['[ESTÚDIO CRIATIVO]', '[CREATIVE STUDIO]'],
-    'hero.sub':        ['Construímos ideias com <em>estrutura</em>, <em>narrativa</em> e <em>impacto</em>.',
-                        'We build ideas with <em>structure</em>, <em>narrative</em> and <em>impact</em>.'],
-    'hero.scroll':     ['Role', 'Scroll'],
+    'hero.top':        ['Conteúdo &amp; Marketing<br>Marca &amp; Identidade',
+                        'Content &amp; Marketing<br>Brand &amp; Identity'],
+    'hero.tagline':    ['Construímos ideias com estrutura, narrativa e impacto.',
+                        'We build ideas with structure, narrative and impact.'],
     'ch.design':       ['Design', 'Design'],
     'ch.film':         ['Filme', 'Film'],
     'ch.projects':     ['Projetos', 'Projects'],
@@ -28,7 +28,14 @@
                         '<span class="hl-r">3</span> — Structure, rhythm and conclusion.'],
     'manifesto.body':  ['Início, meio e fim. Setup, conflito e resolução. A regra dos terços. O cérebro entende e memoriza melhor em três. Por isso 1, 2, 3… e já.',
                         'Beginning, middle and end. Setup, conflict and resolution. The rule of thirds. The brain understands and remembers better in threes. That’s why 1, 2, 3… done.'],
-    'pillars.bar':     ['02 — O que fazemos', '02 — What we do'],
+    'pillars.label':   ['02 / Pilares', '02 / Pillars'],
+    'pillars.title':   ['Pilares', 'Pillars'],
+    'pillars.lead.design':   ['Forma visual, identidade e campanhas construídas com direção.',
+                              'Visual form, identity and campaigns built with direction.'],
+    'pillars.lead.film':     ['Narrativas em movimento — ritmo, imagem e finalização.',
+                              'Narratives in motion — rhythm, image and post.'],
+    'pillars.lead.projects': ['Estratégia, experiências digitais e ações especiais para ideias que precisam sair do comum.',
+                              'Strategy, digital experiences and special actions for ideas that need to break the ordinary.'],
     'srv.artdir':      ['Direção de Arte', 'Art Direction'],
     'srv.campaign':    ['Conceito de Campanha', 'Campaign Concept'],
     'srv.cgi':         ['Comerciais &amp; CGI', 'Commercials &amp; CGI'],
@@ -115,6 +122,9 @@
   $$('[data-set-lang]').forEach((b) =>
     b.addEventListener('click', () => applyLang(b.getAttribute('data-set-lang'))));
 
+  /* cor da tinta (off-white) usada no arco de clientes */
+  const inkRGB = '231,229,223';
+
   /* ---------- current year ---------- */
   const y = $('[data-year]');
   if (y) y.textContent = new Date().getFullYear();
@@ -154,6 +164,10 @@
     const total = sec.offsetHeight - innerHeight;
     const frac = n > 1 ? i / (n - 1) : 0;
     goToY(absTop(sec) + frac * total);
+  };
+  const sectionStepFrac = (sec, frac) => {
+    const total = sec.offsetHeight - innerHeight;
+    goToY(absTop(sec) + clamp(frac, 0, 1) * total);
   };
 
   $$('a[href^="#"]').forEach((a) => {
@@ -211,57 +225,84 @@
     });
   })();
 
-  /* ---------- PILARES "o que fazemos" ---------- */
+  /* ---------- PILARES (serviços com reveal cumulativo + labels sticky) ---------- */
   (() => {
     const sec = $('[data-pillars]');
     if (!sec) return;
-    const track  = $('[data-pillar-track]', sec);
-    const vp     = $('.pillars__viewport', sec);
-    const groups = $$('.pillars__group', sec);
-    const btns   = $$('[data-pillar-nav]', sec);
+    const stage   = $('.pillars__stage', sec);
+    const track   = $('[data-pillar-track]', sec);
+    const srvs    = $$('.srv', track);
+    const labels  = $$('.pidx', sec);
     const countEl = $('[data-pillar-count]', sec);
-    const glow   = $('[data-pillar-glow]', sec);
-    const n = groups.length;
-    const colors = ['var(--r)', 'var(--g)', 'var(--b)'];
-    const glows  = ['rgba(248,82,85,.16)', 'rgba(155,225,135,.14)', 'rgba(95,168,255,.16)'];
+    const glow    = $('[data-pillar-glow]', sec);
+    const G = labels.length;
+    const N = srvs.length;
+    const colorsVar = ['var(--r)', 'var(--g)', 'var(--b)'];
+    const C = ['248,82,85', '155,225,135', '95,168,255'];
+    // 1º e último serviço de cada grupo (p/ alinhar e prender os labels)
+    const range = labels.map((_, g) => {
+      const idxs = srvs.map((s, i) => (+s.dataset.grp === g ? i : -1)).filter((i) => i >= 0);
+      return { first: idxs[0], last: idxs[idxs.length - 1] };
+    });
     let active = -1;
 
-    btns.forEach((b, i) => b.addEventListener('click', () => sectionStep(sec, i, n)));
+    labels.forEach((l, i) => l.addEventListener('click', () =>
+      sectionStepFrac(sec, range[i].first / (N - 1))));
 
     const setActive = (i) => {
       if (i === active) return;
       active = i;
-      btns.forEach((b, k) => b.classList.toggle('is-on', k === i));
-      groups.forEach((g, k) => g.classList.toggle('is-active', k === i));
-      countEl.textContent = pad2(i + 1) + ' / ' + pad2(n);
-      sec.style.setProperty('--pillar', colors[i]);
-      glow.style.background = `radial-gradient(60% 60% at 50% 50%, ${glows[i]}, transparent 70%)`;
+      labels.forEach((l, k) => l.classList.toggle('is-on', k === i));
+      countEl.textContent = pad2(i + 1) + ' / ' + pad2(G);
+      sec.style.setProperty('--pillar', colorsVar[i]);
+      const c = C[i];
+      glow.style.background =
+        `radial-gradient(58% 46% at 22% 24%, rgba(${c},.28), transparent 60%),` +
+        `radial-gradient(54% 58% at 82% 76%, rgba(${c},.24), transparent 62%),` +
+        `radial-gradient(120% 100% at 50% 50%, rgba(${c},.12), transparent 74%)`;
     };
+
+    const centerY = (i, ty) => srvs[i].offsetTop + srvs[i].offsetHeight / 2 + ty;
 
     addScroll(() => {
       if (isStatic()) {
         sec.classList.add('is-static');
         track.style.transform = '';
-        groups.forEach((g) => g.classList.add('is-active'));
+        srvs.forEach((s) => { s.style.opacity = ''; });
+        labels.forEach((l) => { l.style.transform = ''; });
+        if (active < 0) setActive(0);
         return;
       }
       sec.classList.remove('is-static');
       const rect = sec.getBoundingClientRect();
       const p = clamp((0 - rect.top) / (rect.height - innerHeight), 0, 1);
-      const scrollable = track.scrollHeight - vp.clientHeight;
-      track.style.transform = `translateY(${-p * scrollable}px)`;
-      const mid = vp.getBoundingClientRect().top + vp.clientHeight / 2;
-      let best = 0, bd = Infinity;
-      groups.forEach((g, k) => {
-        const r = g.getBoundingClientRect();
-        const d = Math.abs(r.top + r.height / 2 - mid);
-        if (d < bd) { bd = d; best = k; }
+      const stageH = stage.clientHeight;
+      const readY = stageH * 0.4;
+      const firstC = srvs[0].offsetTop + srvs[0].offsetHeight / 2;
+      const lastC  = srvs[N - 1].offsetTop + srvs[N - 1].offsetHeight / 2;
+      const ty = readY - (firstC + p * (lastC - firstC));
+      track.style.transform = `translateY(${ty.toFixed(1)}px)`;
+
+      // reveal cumulativo POR serviço (igual ao arco de clientes): apagado até a
+      // linha, acende de uma vez ao cruzar e PERMANECE aceso
+      const cf = p * (N - 1);
+      srvs.forEach((s, i) => {
+        const lit = clamp(1 - Math.max(i - cf, 0) / 0.32, 0, 1);
+        s.style.opacity = (0.16 + 0.84 * lit).toFixed(3);
       });
+      const best = +srvs[clamp(Math.round(cf), 0, N - 1)].dataset.grp;
+
+      // labels grudam no grupo: clamp(linha, yPrimeiro, yÚltimo)
+      labels.forEach((l, g) => {
+        const ly = clamp(readY, centerY(range[g].first, ty), centerY(range[g].last, ty));
+        l.style.transform = `translateY(${ly.toFixed(1)}px) translateY(-50%)`;
+      });
+
       setActive(best);
     });
   })();
 
-  /* ---------- CLIENTES: arco de nomes ---------- */
+  /* ---------- CLIENTES: arco tipográfico (estilo "they trust us") ---------- */
   (() => {
     const sec = $('[data-clients]');
     if (!sec) return;
@@ -270,60 +311,104 @@
     const descEl = $('[data-client-desc]', sec);
     const countEl = $('[data-client-count]', sec);
 
-    // PLACEHOLDERS — substituir pela lista real (nomes + logos + descrições)
+    // PLACEHOLDERS — trocar pela lista real (nome + descrição [PT, EN])
     const CLIENTS = [
-      { name: 'Vértiz',     desc: ['Plataforma de tecnologia. Identidade e sistema visual.', 'Technology platform. Identity and visual system.'] },
-      { name: 'Lumiar',     desc: ['Beleza e cosméticos. Campanha e direção de arte.', 'Beauty and cosmetics. Campaign and art direction.'] },
-      { name: 'Caravela',   desc: ['Bebidas premium. Branding e filme.', 'Premium beverages. Branding and film.'] },
-      { name: 'Mirador',    desc: ['Produtora audiovisual. Motion e finalização.', 'Audiovisual production. Motion and post.'] },
-      { name: 'Norte',      desc: ['Moda autoral. Lançamento e experiência digital.', 'Authorial fashion. Launch and digital experience.'] },
-      { name: 'Praça Nove', desc: ['Cultura e eventos. Projeto especial e identidade.', 'Culture and events. Special project and identity.'] },
+      { name: 'Aster',    desc: ['Marca de tecnologia. Identidade e sistema de design.', 'Technology brand. Identity and design system.'] },
+      { name: 'Noma',     desc: ['Hospitalidade e gastronomia. Direção de arte e filme.', 'Hospitality and dining. Art direction and film.'] },
+      { name: 'Vértice',  desc: ['Arquitetura e incorporação. Branding e CGI.', 'Architecture and real estate. Branding and CGI.'] },
+      { name: 'Lumma',    desc: ['Beleza e skincare. Campanha e conteúdo.', 'Beauty and skincare. Campaign and content.'] },
+      { name: 'Distrito', desc: ['Cultura urbana e eventos. Identidade e motion.', 'Urban culture and events. Identity and motion.'] },
+      { name: 'Aurora',   desc: ['Energia e tecnologia. Estratégia e experiência digital.', 'Energy and technology. Strategy and digital experience.'] },
+      { name: 'Prisma',   desc: ['Mídia e entretenimento. Direção de arte e filme.', 'Media and entertainment. Art direction and film.'] },
+      { name: 'Forma',    desc: ['Design de produto e mobiliário. Branding e catálogo.', 'Product and furniture design. Branding and catalogue.'] },
+      { name: 'Cinebox',  desc: ['Audiovisual e streaming. Identidade e finalização.', 'Audiovisual and streaming. Identity and post.'] },
+      { name: 'Atlas',    desc: ['Viagem e logística. Sistema visual e campanha.', 'Travel and logistics. Visual system and campaign.'] },
+      { name: 'Modo',     desc: ['Moda autoral. Lançamento e experiência digital.', 'Authorial fashion. Launch and digital experience.'] },
+      { name: 'Obra',     desc: ['Construção e incorporação. Conceito e identidade.', 'Construction and real estate. Concept and identity.'] },
     ];
     const n = CLIENTS.length;
 
     const names = CLIENTS.map((c, i) => {
       const b = document.createElement('button');
+      b.type = 'button';
       b.className = 'clients__name';
       b.textContent = c.name;
+      b.setAttribute('aria-label', c.name);
       b.addEventListener('click', () => sectionStep(sec, i, n));
       arc.appendChild(b);
       return b;
     });
 
-    let active = 0;
-    const paint = () => {
-      const c = CLIENTS[active];
+    let active = -1;
+    const paint = (i) => {
+      const c = CLIENTS[i];
       logoEl.textContent = c.name;
       descEl.textContent = c.desc[LANG === 'pt' ? 0 : 1];
-      countEl.textContent = pad2(active + 1) + ' / ' + pad2(n);
+      countEl.textContent = pad2(i + 1) + ' / ' + pad2(n);
     };
-    const setActive = (i, force) => {
-      if (i === active && !force) return;
+    const setActive = (i) => {
+      if (i === active) return;
       active = i;
-      paint();
+      paint(i);
       [logoEl, descEl].forEach((el) => { el.classList.remove('swap'); void el.offsetWidth; el.classList.add('swap'); });
     };
-    paint();
-    onLang(() => paint());
+    onLang(() => { if (active >= 0) paint(active); });
 
-    addScroll(() => {
+    // geometria do arco (centro fora da tela à esquerda → vemos só o arco direito)
+    const STEP = 13, D2R = Math.PI / 180;
+    let radius = clamp(0.5 * innerWidth, 440, 820);
+    window.addEventListener('resize', () => { radius = clamp(0.5 * innerWidth, 440, 820); });
+
+    const renderArc = (cf) => {
+      for (let i = 0; i < n; i++) {
+        const b = names[i];
+        const d  = i - cf;            // d>0 = abaixo (não alcançado) | d<0 = acima (já passou)
+        const ar = d * STEP * D2R;
+        const x = (Math.cos(ar) - 1) * radius * 0.5;   // recua p/ a esquerda ao afastar
+        const y = Math.sin(ar) * radius;               // posição vertical no arco
+        const scale = clamp(1 - Math.abs(d) * 0.02, 0.92, 1);
+        b.style.transform =
+          `translate(${x.toFixed(1)}px, calc(-50% + ${y.toFixed(1)}px)) rotate(${(d * STEP).toFixed(2)}deg) scale(${scale.toFixed(3)})`;
+
+        // ACENDE de uma vez ao cruzar a linha de leitura e PERMANECE aceso (d<=0)
+        const lit = clamp(1 - Math.max(d, 0) / 0.22, 0, 1);
+        const col = `rgba(${inkRGB},${(0.14 + lit * 0.86).toFixed(3)})`;
+        b.style.color = col;
+        b.style.webkitTextFillColor = col;
+
+        // BLUR ao subir depois de passar (sem sombra/glow)
+        const rise = Math.max(-d - 0.25, 0);
+        const blur = Math.min(rise * 0.9, 4.5);
+        b.style.filter = blur > 0.05 ? `blur(${blur.toFixed(2)}px)` : 'none';
+
+        // OPACIDADE (profundidade): abaixo dim com a distância; acima dissolve no topo
+        const op = d >= 0 ? clamp(1 - d * 0.07, 0.4, 1) : clamp(1.04 + d * 0.085, 0, 1);
+        b.style.opacity = op.toFixed(3);
+      }
+      setActive(clamp(Math.round(cf), 0, n - 1));
+    };
+
+    // movimento com lerp em requestAnimationFrame (suave, sem jitter)
+    let cur = 0, target = 0, running = false;
+    const tick = () => {
+      const rect = sec.getBoundingClientRect();
       if (isStatic()) {
         sec.classList.add('is-static');
-        names.forEach((b) => { b.style.transform = ''; b.style.opacity = ''; });
-        return;
+        names.forEach((b) => { b.style.transform = ''; b.style.opacity = ''; b.style.filter = ''; b.style.color = ''; b.style.webkitTextFillColor = ''; });
+        if (active < 0) setActive(0);
+        running = false; return;
       }
       sec.classList.remove('is-static');
-      const rect = sec.getBoundingClientRect();
-      const p = clamp((0 - rect.top) / (rect.height - innerHeight), 0, 1);
-      const pf = p * (n - 1);
-      names.forEach((b, i) => {
-        const d = i - pf;
-        b.style.transform = `translate(0, calc(-50% + ${d * 118}%)) rotate(${d * 7}deg)`;
-        b.style.opacity = clamp(1 - Math.abs(d) * 0.32, 0, 1);
-        b.classList.toggle('is-active', Math.round(pf) === i);
-      });
-      setActive(clamp(Math.round(pf), 0, n - 1));
-    });
+      target = clamp((0 - rect.top) / (rect.height - innerHeight), 0, 1);
+      cur += (target - cur) * 0.12;
+      if (Math.abs(target - cur) < 0.0004) cur = target;
+      renderArc(cur * (n - 1));
+      if (cur !== target) requestAnimationFrame(tick);
+      else running = false;
+    };
+    const kick = () => { if (!running) { running = true; requestAnimationFrame(tick); } };
+    addScroll(kick);
+    kick();
   })();
 
   /* ---------- menu full-screen ---------- */
@@ -348,6 +433,21 @@
 
   /* ---------- back to top ---------- */
   $('[data-totop]')?.addEventListener('click', () => goTo($('#hero')));
+
+  /* ---------- HERO: troca de cor (RGB da marca) ao passar o mouse ---------- */
+  (() => {
+    const hero = $('[data-hero]');
+    if (!hero) return;
+    const COLORS = ['var(--b)', 'var(--g)', 'var(--r)']; // começa no azul
+    let cur = 0;
+    hero.style.setProperty('--hero-color', COLORS[cur]);
+    hero.addEventListener('mouseenter', () => {
+      let next = cur;
+      while (next === cur) next = Math.floor(Math.random() * COLORS.length);
+      cur = next;
+      hero.style.setProperty('--hero-color', COLORS[cur]);
+    });
+  })();
 
   /* ---------- aplica idioma + primeira pintura ---------- */
   applyLang(LANG);
